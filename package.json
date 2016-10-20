@@ -1,0 +1,33 @@
+{
+  "name": "cue-proposal-mngt-apis",
+  "version": "1.0.0",
+  "description": "Proposal management API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandeepp-cuelogic/cue-proposal-mngt-apis.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sandeepp-cuelogic/cue-proposal-mngt-apis/issues"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "boom": "^4.2.0",
+    "hapi": "^15.1.0",
+    "hapi-auth-jwt": "^4.0.0",
+    "inert": "^4.0.2",
+    "install": "^0.8.1",
+    "joi": "^9.0.4",
+    "jsonwebtoken": "^7.1.9",
+    "md5": "^2.2.1",
+    "mysql": "^2.11.1",
+    "npm": "^3.10.8",
+    "socks5-client": "^1.2.1"
+  },
+  "homepage": "https://github.com/sandeepp-cuelogic/cue-proposal-mngt-apis#readme"
+}
