@@ -1,6 +1,7 @@
 const Joi = require('joi') ;
 var User = require('./models/user.js') ;
 var Client = require('./models/client.js') ;
+var Proposal = require('./models/proposal.js') ;
 var valid = {
     id : Joi.number(),
     first_name:Joi.string().min(3).max(30),
@@ -28,7 +29,7 @@ module.exports = [{
     },
     {
         method: 'POST',
-        path: '/signup',
+        path: '/registration',
         handler: User.signup ,
         config: {
             auth: false,
@@ -48,7 +49,7 @@ module.exports = [{
         handler: User.users,
         config:{
             auth:'token'
-        }        
+        }
     },       
     {
         method: 'GET',
@@ -64,6 +65,26 @@ module.exports = [{
         method: 'GET',
         path: '/clients',
         handler: Client.clients
+    }, 
+    {
+        method: 'POST',
+        path: '/client',
+        handler: Client.addClient
+    }, 
+    {
+        method: 'POST',
+        path: '/proposal',
+        handler: Proposal.addProposal
+    }, 
+    {
+        method: 'GET',
+        path: '/proposals/{status}',
+        handler: Proposal.proposalsListing
+    }, 
+    {
+        method: 'PUT',
+        path: '/proposal',
+        handler: Proposal.update
     }];
 
 //mysqldb.end();
