@@ -1,8 +1,7 @@
 var md5= require('md5') ;
 var DB = require('../config.js') ;
-var Promise = require('bluebird');
-
 //Signup
+
 module.exports.signup = function(req,res) {
 	var user = req.payload ;
 	DB.conn.queryAsync('SELECT * FROM '+DB.users+' where email = "'+user.email+'"').then(function(rows) {
