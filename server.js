@@ -5,8 +5,6 @@ global.jwt_secret = 'vbbbcvv765656hvhdgAdsFBEDstdsds6725764';
 //Changing this secret will reset all token to false
 server.connection({ port: 8000 ,routes: {cors: true }});
 
-console.log(__filename);
-
 var validate = function (request, decoded, callback) {
     var error;
     if (!decoded.id) {

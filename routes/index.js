@@ -47,20 +47,12 @@ module.exports = [{
                 }
             }
         }
-    },          
+    },
     {
         method: 'GET',
         path: '/users',
-        handler: User.users,
-        config:{
-            auth:'token'
-        }
-    },       
-    {
-        method: 'GET',
-        path: '/logout',
-        handler: User.logout
-    }, 
+        handler: User.users
+    },
     {
         method: 'GET',
         path: '/countries',
@@ -78,8 +70,8 @@ module.exports = [{
         config: {
             validate: {
                 payload: {
-                    name:valid.client_name ,
-                    country_id:valid.id ,
+                    name:valid.client_name.required() ,
+                    country_id:valid.id.required() ,
                     logo_file_name:valid.file
                 }
             }
@@ -93,10 +85,10 @@ module.exports = [{
         config: {
             validate: {
                 payload: {
-                    title:valid.title ,
+                    title:valid.title.required() ,
                     client_id:valid.id ,
-                    assigned_to:valid.id ,
-                    created_by:valid.id,
+                    assigned_to:valid.id.required() ,
+                    created_by:valid.id.required(),
                     more_info : valid.text
                 }
             }
@@ -110,12 +102,40 @@ module.exports = [{
     {
         method: 'PUT',
         path: '/proposal',
-        handler: Proposal.update
+        handler: Proposal.update,
+        config: {
+            validate: {
+                payload: {
+                    id:valid.id.required() ,
+                    title:valid.title.required(),
+                    client_id:valid.id.required() ,
+                    assigned_to:valid.id.required() ,
+                    more_info : valid.text
+                }
+            }
+        }
     }, 
     {
         method: 'GET',
         path: '/proposal/{Id}',
         handler: Proposal.view
+    },
+    {
+        method: 'POST',
+        path: '/specification',
+        handler: Specification.add,
+        config: {
+            validate: {
+                payload: {
+                    proposal_id:valid.id.required() ,
+                    title:valid.title.required() ,
+                    info : valid.text,
+                    cost: Joi.number().required(),
+                    created_by: valid.id.required()
+                }
+            }
+        }
+
     },
     {
         method: 'GET',
@@ -125,7 +145,18 @@ module.exports = [{
     {
         method: 'PUT',
         path: '/specification',
-        handler: Specification.update
+        handler: Specification.update,
+        config: {
+            validate: {
+                payload: {
+                    id:valid.id.required() ,
+                    proposal_id:valid.id.required() ,
+                    title:valid.title.required() ,
+                    info : valid.text,
+                    cost: Joi.number().required()
+                }
+            }
+        }
     }
     ,
     {

@@ -1,5 +1,6 @@
 var md5= require('md5') ;
 var DB = require('../config.js') ;
+var Boom =  require('boom');
 //Signup
 
 module.exports.signup = function(req,res) {
@@ -15,11 +16,10 @@ module.exports.signup = function(req,res) {
 		    });
       	}
       	else {
-      		res({"statusCode": 202, "message" : "Email already exist"});
+                  res(Boom.conflict('Email already exist'));
       	}
     });
 }
-
 
 module.exports.login = function(req,res) {
 	DB.conn.queryAsync('SELECT id , email FROM '+DB.users+' where email = "'+req.payload.email+'" and password = "'+md5(req.payload.password) + '" limit 1').then(function(rows) {
@@ -41,13 +41,7 @@ module.exports.countries = function(req,res) {
 }
 
 module.exports.users = function(req,res) {
-	DB.conn.queryAsync("SELECT * FROM "+DB.users).then(function(users) {
-	     res(users);
-	});   
-}
-
-module.exports.logout = function(req,res) {
-	DB.conn.queryAsync('UPDATE '+DB.users+' SET token = "" where id = ?', req.user.id).then(function(result) {
-      res({success : "You have successfully logged out"});
-    });
+      DB.conn.queryAsync("SELECT U.id , CONCAT(U.first_name ,' ', U.last_name) As name  FROM "+DB.users+' As U').then(function(users) {
+           res(users);
+      });
 }
