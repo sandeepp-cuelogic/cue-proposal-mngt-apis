@@ -8,5 +8,6 @@ const connection = mysql.createConnection({
 	password : process.env.DB_PASSWORD,
 	database : process.env.DB_NAME
 });
+
 var conn = Bluebird.promisifyAll(connection) ;
 module.exports={conn:conn,users:'users',clients:'clients',proposals :'proposals',countries:'countries',specifications:'specifications'} ;

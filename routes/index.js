@@ -14,6 +14,7 @@ var valid = {
     password : Joi.string().alphanum().min(3).max(20),
     contact : Joi.number(),
     role: Joi.number(),
+    role: Joi.number().min(0).max(1),
     username: Joi.string().alphanum().min(3).max(20),
     file: Joi.string().max(80)
 };
@@ -114,11 +115,50 @@ module.exports = [{
                 }
             }
         }
-    }, 
+    },
     {
         method: 'GET',
         path: '/proposal/{Id}',
         handler: Proposal.view
+    },
+    {
+        method: 'POST',
+        path: '/proposal_assign',
+        handler: Proposal.assign,
+        config:{
+            validate:{
+                payload: {
+                    proposal_id: valid.id.required(),
+                    assigned_to : valid.id.required()
+                }
+            }
+        }
+    },
+    {
+        method: 'POST',
+        path: '/proposal_change_status',
+        handler: Proposal.change_status,
+        config:{
+            validate:{
+                payload: {
+                    proposal_id: valid.id.required(),
+                    status : valid.id.required()
+                }
+            }
+        }
+    },
+    {
+        method: 'POST',
+        path: '/proposal_change_client',
+        handler: Proposal.change_client,
+        config:{
+            validate:{
+                payload: {
+                    proposal_id: valid.id.required(),
+                    client_id : valid.id.required()
+                }
+            }
+        }
     },
     {
         method: 'POST',

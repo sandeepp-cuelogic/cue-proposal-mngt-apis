@@ -1,6 +1,7 @@
 var md5= require('md5') ;
 var DB = require('../config.js') ;
 var random = require('../../libs/random.js') ;
+var Boom =  require('boom');
 
 module.exports.clients = function(req,res) {
       DB.conn.queryAsync("SELECT * FROM "+DB.clients).then(function(clients) {
@@ -20,10 +21,10 @@ module.exports.add = function(req,res) {
                        }
                        else
                        {
-                              res({"statusCode":500,"message":"Error in adding client"});
+                              res(Boom.forbidden('No client found'));
                        }
                   });
             }
-            res({"statusCode":409,"message":"Client "+client.name +" already exist" });          
+            res(Boom.conflict('Client already exist'));
       });
 }

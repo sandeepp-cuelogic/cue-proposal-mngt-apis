@@ -16,12 +16,12 @@ module.exports.listings = function(req,res) {
     var qry =  'select * from '+DB.specifications+' As S where S.proposal_id = ' + proposalId;
     DB.conn.queryAsync(qry).then(function(specifications) {
         if(specifications.length) {
-          res({"statusCode":200,"message":"Specifications listing done","data":specifications});  
+            res({"statusCode":200,"message":"Specifications listing done","data":specifications}) ;
         }
         else
-        {
-          res({"statusCode":400,"message":"Error in specification listing"});  
-        }        
+        {          
+            res(Boom.notFound('missing'));
+        }
     });
 }
 
@@ -39,11 +39,10 @@ module.exports.update = function(req, res) {
     });
 }
 
-
 module.exports.delete = function(req, res) {
     DB.conn.queryAsync('SELECT * FROM '+DB.specifications+' where id = '+req.params.id).then(function(rows) {
         if(rows.length == 0) {
-            res({"statusCode":400,"message":"No specification found with this id . Please enter the correct specification ID"});
+            res(Boom.notFound('No specification found with this id . Please enter the correct specification ID'));
         }
         else {
             DB.conn.queryAsync('delete from '+DB.proposals+' where id = '+req.params.Id).then(function(result) {

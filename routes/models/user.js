@@ -24,7 +24,7 @@ module.exports.signup = function(req,res) {
 module.exports.login = function(req,res) {
 	DB.conn.queryAsync('SELECT id , email FROM '+DB.users+' where email = "'+req.payload.email+'" and password = "'+md5(req.payload.password) + '" limit 1').then(function(rows) {
       	if(rows.length == 0) {
-      		res({"statusCode":400, "message":"Invalid credentials. Please try with different credentials"}) ;
+      		res(Boom.unauthorized('Invalid credentials. Please try with different credentials')) ;
       	}
       	else {
       		var user = rows[0];
